@@ -1,0 +1,37 @@
+Sarah (Product Manager): OK so we're here to nail down what Phase 2 of the customer portal looks like. Marco, can you kick us off?
+
+Marco (Business Sponsor): Sure. The main driver is reducing support ticket volume. Our team is drowning — 4,000 tickets a month, most of them are 'where is my order' type questions. If we can cut that by half through self-service, that's a $200K annual savings.
+
+Sarah (Product Manager): Great, that's a clear business goal. So the ask is a self-service order tracking feature.
+
+Priya (Tech Lead): Before we go there — what's our latency target for order lookup? Right now the API takes about 800ms. That's not going to feel snappy in a portal.
+
+Marco (Business Sponsor): We need it under 200ms at the 95th percentile. Anything slower and customers just call anyway.
+
+Priya (Tech Lead): OK that's non-trivial. We'll need a read replica plus caching. Doable.
+
+Sarah (Product Manager): Let me capture the functional side. Customers must be able to search for their orders by order number, date range, and status. And filter by any combination.
+
+Marco (Business Sponsor): Also — they should see estimated delivery date, not just shipped/not-shipped.
+
+Priya (Tech Lead): That means we need to integrate with the carrier APIs. FedEx and UPS at minimum. Might be an issue with rate limits on their end.
+
+Sarah (Product Manager): Add it as a requirement, we'll deal with rate limits later. Anything else on functional?
+
+Devon (QA Lead): I want to make sure we have clear acceptance criteria. What defines 'done' for search? Given a valid order number, when the customer searches, then results appear in under 2 seconds — is that reasonable?
+
+Priya (Tech Lead): Yes. And given a partial or invalid input, when they submit, then a helpful error message with suggestions.
+
+Marco (Business Sponsor): One more business point — this has to launch by Q2. Anything after that misses the peak return season.
+
+Sarah (Product Manager): Noted. Priya, from a security standpoint — do we need MFA on portal access?
+
+Priya (Tech Lead): For this scope, existing SSO is enough. If we add refund initiation in Phase 3, then yes MFA.
+
+Sarah (Product Manager): Devon, one more acceptance criterion — given a customer looks up an order that isn't theirs, when they submit, then no data leaks and access is logged.
+
+Devon (QA Lead): Absolutely, that's a hard requirement for security review.
+
+Marco (Business Sponsor): Actually, let me revise something. I said 50% ticket reduction earlier — my team pointed out the real target from finance is 40% reduction, not 50%. Let's go with 40%.
+
+Sarah (Product Manager): Updated. OK I think we have enough to draft the BRD. Priya can you send me your carrier integration doc? And Devon, we'll circle back on the full acceptance criteria list.
